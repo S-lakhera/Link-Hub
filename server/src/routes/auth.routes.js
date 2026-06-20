@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { loginUser, logoutUser, registerUser } from '../controllers/User.controller.js';
-import { loginValidationRules, registerValidationRules } from '../validators/auth.validator.js';
+import { loginValidationRules, registerValidationRules } from '../validators/auth.validators.js';
 import { validate } from '../middlewares/validate.middleware.js';
 
 let router = Router()
