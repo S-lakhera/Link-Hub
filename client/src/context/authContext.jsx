@@ -34,6 +34,8 @@ export const AuthProvider = ({ children }) => {
         setError(null);
         try {
             const response = await axiosInstance.post('/auth/register', userData);
+            console.log(response.data);
+
             if (response.data.success) {
                 setUser(response.data.user);
                 return { success: true };
@@ -53,6 +55,7 @@ export const AuthProvider = ({ children }) => {
         setError(null);
         try {
             const response = await axiosInstance.post('/auth/login', credentials);
+            console.log(response.data);
             if (response.data.success) {
                 setUser(response.data.user);
                 return { success: true };
