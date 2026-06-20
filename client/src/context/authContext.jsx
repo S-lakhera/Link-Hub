@@ -1,105 +1,161 @@
-import { createContext, useState, useEffect, useMemo } from 'react';
-import axiosInstance from '../api/axiosInstance.jsx'
+import { createContext, useState, useEffect, useMemo } from "react";
+import axiosInstance from "../api/axiosInstance.jsx";
 
-// Create the core context
 export const AuthContext = createContext(null);
 
 export const AuthProvider = ({ children }) => {
-    const [user, setUser] = useState(null);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
+  const [user, setUser] = useState(() => {
+    try {
+      const storedUser = localStorage.getItem("user");
 
-    // Optional: Check if a user session exists on app mount/refresh
-    useEffect(() => {
-        const checkUserSession = async () => {
-            try {
-                // Assuming you have a /me or /profile endpoint to verify the cookie
-                const response = await axiosInstance.get('/auth/me');
-                if (response.data.success) {
-                    setUser(response.data.user);
-                }
-            } catch (err) {
-                // If token is expired or missing, user stays null gracefully
-                setUser(null);
-            } finally {
-                setLoading(false);
-            }
-        };
-        checkUserSession();
-    }, []);
+      return storedUser ? JSON.parse(storedUser) : null;
+    } catch (error) {
+      console.error("Failed to parse user from localStorage");
+      localStorage.removeItem("user");
+      return null;
+    }
+  });
 
-    // 1. REGISTER ACTION
-    const register = async (userData) => {
-        setLoading(true);
-        setError(null);
-        try {
-            const response = await axiosInstance.post('/auth/register', userData);
-            console.log(response.data);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-            if (response.data.success) {
-                setUser(response.data.user);
-                return { success: true };
-            }
-        } catch (err) {
-            const errMsg = err.response?.data?.error || err.response?.data?.errors?.[0] || "Registration failed";
-            setError(errMsg);
-            return { success: false, error: errMsg };
-        } finally {
-            setLoading(false);
+  // Verify session on app load
+  useEffect(() => {
+    const checkUserSession = async () => {
+      try {
+        const response = await axiosInstance.get("/auth/me");
+
+        if (response.data.success) {
+          setUser(response.data.user);
+
+          localStorage.setItem(
+            "user",
+            JSON.stringify(response.data.user)
+          );
+        } else {
+          setUser(null);
+          localStorage.removeItem("user");
         }
+      } catch (err) {
+        setUser(null);
+        localStorage.removeItem("user");
+      } finally {
+        setLoading(false);
+      }
     };
 
-    // 2. LOGIN ACTION
-    const login = async (credentials) => {
-        setLoading(true);
-        setError(null);
-        try {
-            const response = await axiosInstance.post('/auth/login', credentials);
-            console.log(response.data);
-            if (response.data.success) {
-                setUser(response.data.user);
-                return { success: true };
-            }
-        } catch (err) {
+    checkUserSession();
+  }, []);
 
-            const errMsg = err.response?.data?.message || err.response?.data?.errors[0] || "Login failed";
-            setError(errMsg);
-            return { success: false, error: errMsg };
-        } finally {
-            setLoading(false);
-        }
-    };
+  // REGISTER
+  const register = async (userData) => {
+    setLoading(true);
+    setError(null);
 
-    // 3. LOGOUT ACTION
-    const logout = async () => {
-        setLoading(true);
-        try {
-            const response = await axiosInstance.post('/auth/logout');
-            if (response.data.success) {
-                setUser(null); // Clear local global state
-                return { success: true };
-            }
-        } catch (err) {
-            console.error("Logout failed:", err);
-        } finally {
-            setUser(null)
-            setLoading(false);
-        }
-    };
+    try {
+      const response = await axiosInstance.post(
+        "/auth/register",
+        userData
+      );
 
-    const value = useMemo(() => ({
-        user,
-        loading,
-        error,
-        login,
-        register,
-        logout,
-        setError
-    }), [user, loading, error]);
+      if (response.data.success) {
+        setUser(response.data.user);
 
-    return (
-        <AuthContext.Provider value={value}>
-            {children}
-        </AuthContext.Provider>
-    );
+        localStorage.setItem(
+          "user",
+          JSON.stringify(response.data.user)
+        );
+
+        return { success: true };
+      }
+    } catch (err) {
+      const errMsg =
+        err.response?.data?.error ||
+        err.response?.data?.errors?.[0] ||
+        err.response?.data?.message ||
+        "Registration failed";
+
+      setError(errMsg);
+
+      return {
+        success: false,
+        error: errMsg,
+      };
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // LOGIN
+  const login = async (credentials) => {
+    setLoading(true);
+    setError(null);
+
+    try {
+      const response = await axiosInstance.post(
+        "/auth/login",
+        credentials
+      );
+
+      if (response.data.success) {
+        setUser(response.data.user);
+
+        localStorage.setItem(
+          "user",
+          JSON.stringify(response.data.user)
+        );
+
+        return { success: true };
+      }
+    } catch (err) {
+      const errMsg =
+        err.response?.data?.message ||
+        err.response?.data?.error ||
+        err.response?.data?.errors?.[0] ||
+        "Login failed";
+
+      setError(errMsg);
+
+      return {
+        success: false,
+        error: errMsg,
+      };
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // LOGOUT
+  const logout = async () => {
+    setLoading(true);
+
+    try {
+      await axiosInstance.post("/auth/logout");
+    } catch (err) {
+      console.error("Logout failed:", err);
+    } finally {
+      setUser(null);
+      localStorage.removeItem("user");
+      setLoading(false);
+    }
+  };
+
+  const value = useMemo(
+    () => ({
+      user,
+      loading,
+      error,
+      login,
+      register,
+      logout,
+      setError,
+    }),
+    [user, loading, error]
+  );
+
+  return (
+    <AuthContext.Provider value={value}>
+      {children}
+    </AuthContext.Provider>
+  );
 };

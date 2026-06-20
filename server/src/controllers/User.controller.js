@@ -33,7 +33,7 @@ export const registerUser = async (req, res) => {
     } catch (error) {
         console.log(error);
 
-        res.status(400).json({ success:false, error: error.message });
+        res.status(400).json({ success: false, error: error.message });
     }
 };
 
@@ -58,7 +58,7 @@ export const loginUser = async (req, res) => {
     } catch (error) {
         console.log(error);
 
-        res.status(500).json({ success:false, error: error.message });
+        res.status(500).json({ success: false, error: error.message });
     }
 };
 
@@ -72,7 +72,30 @@ export const logoutUser = (req, res) => {
         })
     } catch (error) {
         res.status(500).json({
-            success:false,
+            success: false,
+            message: error.message,
+        })
+    }
+}
+
+export const getMe = async (req, res) => {
+    try {
+        let userId = req.user.id;
+
+        console.log(userId);
+
+
+        const user = await UserDAO.getUserById(userId)
+
+        res.status(200).json({
+            success: true,
+            message: "User found",
+            user
+        });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            success: false,
             message: error.message,
         })
     }
