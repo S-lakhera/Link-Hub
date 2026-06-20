@@ -9,8 +9,8 @@ import Register from "./features/auth/ui/Register";
 
 import ProtectedRoute from "./routes/ProtectedRoute";
 import PublicRoute from "./routes/PublicRoute";
+import LandingPage from "./features/home/ui/LandingPage";
 
-const LandingPage = () => <h1>Landing Page</h1>;
 
 const Analytics = () => <h1>Analytics Page</h1>;
 
