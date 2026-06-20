@@ -58,7 +58,7 @@ const PublicProfile = () => {
         <div className="relative min-h-screen bg-linear-to-br from-slate-50 via-white to-blue-50">
             <ProfileBackground />
 
-            <div className="relative z-10 max-w-7xl mx-auto px-4 md:px-6 pb-10 ">
+            <div className="relative z-10 max-w-7xl mx-10 px-4 md:px-6 pt-5">
                 <div className="grid lg:grid-cols-[340px_1fr] gap-8 lg:gap-12">
 
                     {/* Left Section */}

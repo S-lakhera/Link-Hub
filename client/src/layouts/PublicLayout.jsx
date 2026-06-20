@@ -7,7 +7,7 @@ const DashboardLayout = () => {
     <div className="min-h-screen bg-slate-50">
       <Navbar />
 
-      <main className="max-w-7xl mx-auto px-6">
+      <main className="w-full mx-auto px-4">
         <Outlet />
       </main>
 

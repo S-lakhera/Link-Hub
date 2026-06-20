@@ -2,15 +2,12 @@ import { Link, NavLink, useNavigate } from "react-router";
 import {
   LayoutDashboard,
   BarChart3,
-  User,
   LogOut,
 } from "lucide-react";
-import useAuth from "../hooks/useAuth.js";
+import useAuth from "../hooks/useAuth";
 
 const Navbar = () => {
   const { user, logout } = useAuth();
-  console.log(user);
-  
   const navigate = useNavigate();
 
   const handleLogout = async () => {
@@ -19,84 +16,224 @@ const Navbar = () => {
   };
 
   return (
-    <header className="sticky top-0 z-50 border-b bg-white">
-      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-6">
-        {/* Logo */}
-        <Link
-          to="/"
-          className="text-2xl font-bold text-slate-900"
-        >
-          LinkHub
-        </Link>
+    <header
+      className="
+        sticky
+        top-0
+        z-50
+        border-b
+        border-slate-200/80
+        bg-white/80
+        backdrop-blur-xl
+      "
+    >
+      <div className="mx-auto max-w-7xl px-4 md:px-6">
+        <div className="flex h-18 items-center justify-between">
+          {/* Logo */}
+          <Link
+            to="/"
+            className="flex items-center gap-3 group"
+          >
+            <div
+              className="
+                h-10
+                w-10
+                rounded-2xl
+                bg-slate-900
+                text-white
+                flex
+                items-center
+                justify-center
+                font-bold
+                font-sora
+                transition-transform
+                duration-300
+                group-hover:rotate-6
+              "
+            >
+              L
+            </div>
 
-        {!user ? (
-          /* Guest Navbar */
-          <div className="flex items-center gap-3">
-            <Link
-              to="/login"
-              className="rounded-lg px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-100"
-            >
-              Login
-            </Link>
+            <div>
+              <h1
+                className="
+                  text-2xl
+                  font-black
+                  font-sora
+                  text-slate-900
+                "
+              >
+                LinkHub
+              </h1>
+            </div>
+          </Link>
 
-            <Link
-              to="/register"
-              className="rounded-lg bg-slate-900 px-4 py-2 text-sm font-medium text-white hover:bg-slate-800"
-            >
-              Sign Up
-            </Link>
-          </div>
-        ) : (
-          /* Authenticated Navbar */
-          <div className="flex items-center gap-5">
-            <NavLink
-              to="/dashboard"
-              className={({ isActive }) =>
-                `flex items-center gap-2 text-sm font-medium ${
-                  isActive
-                    ? "text-slate-900"
-                    : "text-slate-500"
-                }`
-              }
-            >
-              <LayoutDashboard size={18} />
-              Dashboard
-            </NavLink>
+          {!user ? (
+            <div className="flex items-center gap-3">
+              <Link
+                to="/login"
+                className="
+                  px-4
+                  py-2
+                  rounded-xl
+                  font-medium
+                  text-slate-600
+                  hover:text-slate-900
+                  transition-colors
+                "
+              >
+                Login
+              </Link>
 
-            <NavLink
-              to="/analytics"
-              className={({ isActive }) =>
-                `flex items-center gap-2 text-sm font-medium ${
-                  isActive
-                    ? "text-slate-900"
-                    : "text-slate-500"
-                }`
-              }
-            >
-              <BarChart3 size={18} />
-              Analytics
-            </NavLink>
+              <Link
+                to="/register"
+                className="
+                  rounded-xl
+                  bg-slate-900
+                  px-5
+                  py-2.5
+                  text-white
+                  font-medium
+                  hover:scale-105
+                  transition-all
+                "
+              >
+                Get Started
+              </Link>
+            </div>
+          ) : (
+            <div className="flex items-center gap-4">
+              {/* Navigation Pills */}
+              <div
+                className="
+                  hidden
+                  md:flex
+                  items-center
+                  gap-1
+                  rounded-full
+                  bg-slate-100
+                  p-1
+                "
+              >
+                <NavLink
+                  to="/dashboard"
+                  className={({ isActive }) =>
+                    `
+                    flex
+                    items-center
+                    gap-2
+                    rounded-full
+                    px-4
+                    py-2
+                    text-sm
+                    font-medium
+                    transition-all
+                    ${
+                      isActive
+                        ? "bg-white shadow-sm text-slate-900"
+                        : "text-slate-500 hover:text-slate-900"
+                    }
+                  `
+                  }
+                >
+                  <LayoutDashboard size={16} />
+                  Dashboard
+                </NavLink>
 
-            {/* Public Profile */}
-            <button
-              onClick={() =>
-                navigate(`/${user.username}`)
-              }
-              className="flex items-center gap-2 text-slate-600 hover:text-slate-900"
-            >
-              <User size={20} />
-            </button>
+                <NavLink
+                  to="/analytics"
+                  className={({ isActive }) =>
+                    `
+                    flex
+                    items-center
+                    gap-2
+                    rounded-full
+                    px-4
+                    py-2
+                    text-sm
+                    font-medium
+                    transition-all
+                    ${
+                      isActive
+                        ? "bg-white shadow-sm text-slate-900"
+                        : "text-slate-500 hover:text-slate-900"
+                    }
+                  `
+                  }
+                >
+                  <BarChart3 size={16} />
+                  Analytics
+                </NavLink>
+              </div>
 
-            {/* Logout */}
-            <button
-              onClick={handleLogout}
-              className="flex items-center gap-2 rounded-lg border px-3 py-2 text-sm font-medium hover:bg-slate-50"
-            >
-              <LogOut size={18} />
-              Logout
-            </button>
-          </div>
-        )}
+              {/* Profile Button */}
+              <button
+                onClick={() =>
+                  navigate(`/${user.username}`)
+                }
+                className="
+                  flex
+                  items-center
+                  gap-3
+                  rounded-full
+                  bg-slate-100
+                  pl-2
+                  pr-4
+                  py-2
+                  hover:bg-slate-200
+                  transition-colors
+                "
+              >
+                <div
+                  className="
+                    h-9
+                    w-9
+                    rounded-full
+                    bg-slate-900
+                    text-white
+                    flex
+                    items-center
+                    justify-center
+                    font-bold
+                    font-sora
+                  "
+                >
+                  {user?.name?.charAt(0)?.toUpperCase()}
+                </div>
+
+                <span
+                  className="
+                    hidden
+                    lg:block
+                    text-sm
+                    font-medium
+                    text-slate-700
+                  "
+                >
+                  @{user.username}
+                </span>
+              </button>
+
+              {/* Logout */}
+              <button
+                onClick={handleLogout}
+                className="
+                  flex
+                  items-center
+                  gap-2
+                  rounded-xl
+                  px-3
+                  py-2
+                  text-slate-500
+                  hover:text-red-500
+                  transition-colors
+                "
+              >
+                <LogOut size={18} />
+              </button>
+            </div>
+          )}
+        </div>
       </div>
     </header>
   );
