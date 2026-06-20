@@ -5,6 +5,7 @@ import AnalyticsSection from "../components/AnalyticsSection";
 import HowItWorksSection from "../components/HowItWorksSection";
 import StatsSection from "../components/StatsSection";
 import CTASection from "../components/CTASection";
+import Footer from "../../../components/Footer";
 
 const LandingPage = () => {
   return (
@@ -16,6 +17,7 @@ const LandingPage = () => {
       <HowItWorksSection />
       <StatsSection />
       <CTASection />
+      <Footer/>
     </div>
   );
 };

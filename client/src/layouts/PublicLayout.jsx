@@ -11,7 +11,6 @@ const DashboardLayout = () => {
         <Outlet />
       </main>
 
-      <Footer/>
     </div>
   );
 };
