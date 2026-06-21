@@ -6,7 +6,7 @@ import {
 } from "lucide-react";
 
 const LinkManagementCard = ({
-    link,removeLink, featureLink
+    link,removeLink, featureLink, onEdit
 }) => {
     return (
         <div className="bg-white rounded-3xl p-6 shadow-lg">
@@ -31,7 +31,7 @@ const LinkManagementCard = ({
                     </p>
 
                     <p className="mt-2 text-sm text-slate-400">
-                        github.com/S-lakhera
+                        {link.url}
                     </p>
                 </div>
             </div>
@@ -45,7 +45,9 @@ const LinkManagementCard = ({
             </div>
 
             <div className="flex gap-3 mt-6">
-                <button className="p-2 rounded-lg bg-slate-100">
+                <button
+                onClick={() => onEdit(link)}
+                 className="p-2 rounded-lg bg-slate-100">
                     <Pencil size={16} />
                 </button>
 

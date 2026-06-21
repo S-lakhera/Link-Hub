@@ -8,6 +8,7 @@ import {
     createLink,
     deleteLink,
     makeFeaturedLink,
+    updateLink,
 } from "../api/dashboard.api";
 
 const useDashboard = () => {
@@ -44,12 +45,18 @@ const useDashboard = () => {
         fetchLinks();
     };
 
-    const featureLink =
-        async (id) => {
-            await makeFeaturedLink(id);
+    const updateExistingLink = async (id, data) => {
+        await updateLink(id, data);
 
-            fetchLinks();
-        };
+        fetchLinks();
+    };
+
+    const featureLink = async (id) => {
+        await makeFeaturedLink(id);
+
+        fetchLinks();
+    };
+
 
     return {
         links,
@@ -59,8 +66,8 @@ const useDashboard = () => {
         removeLink,
         featureLink,
 
-        refreshLinks:
-            fetchLinks,
+        refreshLinks: fetchLinks,
+        updateLink:updateExistingLink,
     };
 };
 

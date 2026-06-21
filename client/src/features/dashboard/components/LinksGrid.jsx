@@ -1,6 +1,6 @@
 import LinkManagementCard from "./LinkManagementCard.jsx";
 
-const LinksGrid = ({links, removeLink, featureLink}) => {
+const LinksGrid = ({links, removeLink, featureLink, onEdit}) => {
     return (
         <div>
             <div className="mb-6">
@@ -20,6 +20,7 @@ const LinksGrid = ({links, removeLink, featureLink}) => {
                         link={link}
                         removeLink={removeLink}
                         featureLink={featureLink}
+                        onEdit={onEdit}
                     />
                 ))}
             </div>
