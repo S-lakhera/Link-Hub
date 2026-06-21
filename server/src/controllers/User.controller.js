@@ -25,7 +25,14 @@ export const registerUser = async (req, res) => {
             throw new Error("Error in generating auth token.");
         }
 
-        res.cookie("auth_Token", authToken);
+        const cookieOptions = {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === 'production',
+            sameSite: process.env.NODE_ENV === 'production' ? 'None' : 'Lax',
+            maxAge: 24 * 60 * 60 * 1000, // 1 day
+        };
+
+        res.cookie("auth_Token", authToken, cookieOptions);
 
         res.status(201).json({
             success: true,
@@ -48,7 +55,14 @@ export const loginUser = async (req, res) => {
         if (!isMatch) return res.status(400).json({ message: "Invalid credentials" });
 
         const authToken = generateToken(user)
-        res.cookie("auth_Token", authToken)
+        const cookieOptions = {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === 'production',
+            sameSite: process.env.NODE_ENV === 'production' ? 'None' : 'Lax',
+            maxAge: 24 * 60 * 60 * 1000, // 1 day
+        };
+
+        res.cookie("auth_Token", authToken, cookieOptions)
 
         res.status(200).json({
             success: true,
@@ -63,7 +77,11 @@ export const loginUser = async (req, res) => {
 
 export const logoutUser = (req, res) => {
     try {
-        res.clearCookie("auth_Token");
+        res.clearCookie("auth_Token", {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === 'production',
+            sameSite: process.env.NODE_ENV === 'production' ? 'None' : 'Lax',
+        });
 
         res.status(200).json({
             success: true,
