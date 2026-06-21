@@ -37,8 +37,12 @@ export const AuthProvider = ({ children }) => {
           localStorage.removeItem("user");
         }
       } catch (err) {
-        setUser(null);
-        localStorage.removeItem("user");
+        // Only clear user on 401 Unauthorized (invalid/expired token)
+        // Don't log out on network errors or server errors
+        if (err.response?.status === 401) {
+          setUser(null);
+          localStorage.removeItem("user");
+        }
       } finally {
         setLoading(false);
       }
