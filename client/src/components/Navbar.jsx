@@ -1,7 +1,7 @@
 import { Link, NavLink, useNavigate } from "react-router";
 import {
   LayoutDashboard,
-  BarChart3,
+  Link as LinkIcon,
   LogOut,
 } from "lucide-react";
 import useAuth from "../hooks/useAuth";
@@ -51,7 +51,7 @@ const Navbar = () => {
                 group-hover:rotate-6
               "
             >
-              L
+              <LinkIcon size={21} />
             </div>
 
             <div>
