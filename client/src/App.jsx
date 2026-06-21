@@ -11,6 +11,7 @@ import ProtectedRoute from "./routes/ProtectedRoute";
 import PublicRoute from "./routes/PublicRoute";
 import LandingPage from "./features/home/pages/LandingPage";
 import PublicProfile from "./features/public-profile/pages/PublicProfile";
+import Dashboard from "./features/dashboard/pages/Dashboard";
 
 
 const Analytics = () => <h1>Analytics Page</h1>;
@@ -60,7 +61,7 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/dashboard",
-        element: <h1>Dashboard</h1>,
+        element: <Dashboard />,
       },
       {
         path: "/analytics",
