@@ -8,6 +8,7 @@ const Protect = (req, res, next) => {
         }
 
         let payload = verifyToken(token);
+        
         req.user = payload
         
 

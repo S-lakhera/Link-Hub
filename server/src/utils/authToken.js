@@ -8,7 +8,7 @@ console.log(secret);
 
 export const generateToken = (user) => {
     const payload = {
-        id: user._id,
+        _id: user._id,
         email: user.email
     };
     return jwt.sign(payload, secret, { expiresIn: '1d' })

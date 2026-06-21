@@ -36,9 +36,9 @@ const Navbar = () => {
           >
             <div
               className="
-                h-10
-                w-10
-                rounded-2xl
+                h-9
+                w-9
+                rounded-xl
                 bg-slate-900
                 text-white
                 flex

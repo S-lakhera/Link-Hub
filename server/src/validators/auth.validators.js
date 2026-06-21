@@ -1,4 +1,4 @@
-import { body } from 'express-validator';
+import { body, param } from 'express-validator';
 
 // 1. Validation Rules for Registration
 export const registerValidationRules = [
@@ -6,7 +6,8 @@ export const registerValidationRules = [
         .trim()
         .notEmpty().withMessage('Username is required')
         .isAlphanumeric().withMessage('Username must contain only letters and numbers')
-        .isLength({ min: 3, max: 30 }).withMessage('Username must be between 3 and 30 characters'),
+        .isLength({ min: 3, max: 30 }).withMessage('Username must be between 3 and 30 characters')
+        .toLowerCase(),
 
     body('email')
         .trim()
@@ -33,3 +34,13 @@ export const loginValidationRules = [
         .notEmpty().withMessage('Password is required')
 ];
 
+export const publicProfileValidator = [
+    param("username")
+        .trim()
+        .notEmpty()
+        .withMessage("Username is required")
+        .isLength({ min: 3, max: 30 })
+        .withMessage(
+            "Username must be between 3 and 30 characters"
+        ),
+];
