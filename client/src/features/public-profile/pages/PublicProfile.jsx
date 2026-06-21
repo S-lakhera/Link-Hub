@@ -1,64 +1,48 @@
+import { useParams } from "react-router";
+
 import ProfileBackground from "../components/ProfileBackground";
 import ProfileHeader from "../components/ProfileHeader";
 import SocialLinks from "../components/SocialLinks";
 import FeaturedLink from "../components/FeaturedLink";
 import LinksList from "../components/LinksList";
 
+import usePublicProfile from "../hooks/usePublicProfile";
+
 const PublicProfile = () => {
-    const profile = {
-        name: "Shashank Lakhera",
-        username: "shashank",
-        bio: "Full Stack Developer | MERN Stack | Building products on the internet",
+    const { username } = useParams();
 
-        avatar:
-            "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=880&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    const {
+        profile,
+        links,
+        loading,
+        error,
+    } = usePublicProfile(username);
 
-        socials: {
-            github: "#",
-            linkedin: "#",
-            youtube: "#",
-            instagram: "#",
-        },
+    const featuredLink = links.find(
+        (link) => link.isFeatured
+    );
 
-        featuredLink: {
-            title: "Portfolio",
-            description: "Explore my projects and experience",
-            url: "#",
-        },
+    if (loading) {
+        return (
+            <div className="min-h-screen flex items-center justify-center">
+                Loading...
+            </div>
+        );
+    }
 
-        links: [
-            {
-                id: 1,
-                title: "GitHub",
-                description: "Open source projects",
-                url: "#",
-            },
-            {
-                id: 2,
-                title: "LinkedIn",
-                description: "Professional profile",
-                url: "#",
-            },
-            {
-                id: 3,
-                title: "Resume",
-                description: "Download latest resume",
-                url: "#",
-            },
-            {
-                id: 4,
-                title: "YouTube",
-                description: "Coding and development content",
-                url: "#",
-            },
-        ],
-    };
+    if (error) {
+        return (
+            <div className="min-h-screen flex items-center justify-center">
+                {error}
+            </div>
+        );
+    }
 
     return (
         <div className="relative min-h-screen bg-linear-to-br from-slate-50 via-white to-blue-50">
             <ProfileBackground />
 
-            <div className="relative z-10 max-w-7xl mx-10 px-4 md:px-6 pt-5">
+            <div className="relative z-10 max-w-7xl mx-10 px-4 md:px-6 pt-15">
                 <div className="grid lg:grid-cols-[340px_1fr] gap-8 lg:gap-12">
 
                     {/* Left Section */}
@@ -71,10 +55,10 @@ const PublicProfile = () => {
                     {/* Right Section */}
                     <section>
                         <FeaturedLink
-                            link={profile.featuredLink}
+                            link={featuredLink}
                         />
 
-                        <LinksList links={profile.links} />
+                        <LinksList links={links} />
 
                     </section>
 
