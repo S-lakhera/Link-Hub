@@ -23,7 +23,6 @@ const Login = () => {
   } = useForm();
 
   const onSubmit = async (data) => {
-    console.log(data);
     const res = await login(data)
     if (res?.success) {
       navigate("/");

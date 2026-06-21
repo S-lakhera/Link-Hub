@@ -13,8 +13,6 @@ export const createLink = async (req, res) => {
             link,
         });
     } catch (error) {
-        console.log(error);
-
         res.status(500).json({
             success: false,
             message: error.message,
@@ -32,7 +30,6 @@ export const getMyLinks = async (req, res) => {
             links,
         });
     } catch (error) {
-        console.log(error);
 
         res.status(500).json({
             success: false,
@@ -59,8 +56,6 @@ export const getLinkById = async (req, res) => {
             link,
         });
     } catch (error) {
-        console.log(error);
-
         res.status(500).json({
             success: false,
             message: error.message,
@@ -98,7 +93,6 @@ export const updateLink = async (req, res) => {
             link: updatedLink,
         });
     } catch (error) {
-        console.log(error);
 
         res.status(500).json({
             success: false,
@@ -129,8 +123,6 @@ export const makeFeaturedLink = async (req, res) => {
             link,
         });
     } catch (error) {
-        console.log(error);
-
         res.status(500).json({
             success: false,
             message: error.message,
@@ -141,8 +133,6 @@ export const makeFeaturedLink = async (req, res) => {
 export const deleteLink = async (req, res) => {
     try {
         const { id } = req.params;
-        // console.log(id);
-        // console.log(req.user._id);
         
 
         const link = await LinkDAO.softDelete(id, req.user._id);
@@ -159,8 +149,6 @@ export const deleteLink = async (req, res) => {
             message: "Link deleted successfully",
         });
     } catch (error) {
-        console.log(error);
-
         res.status(500).json({
             success: false,
             message: error.message,
@@ -186,8 +174,6 @@ export const trackLinkClick = async (req, res) => {
             clicks: link.clicks,
         });
     } catch (error) {
-        console.log(error);
-
         res.status(500).json({
             success: false,
             message: error.message,

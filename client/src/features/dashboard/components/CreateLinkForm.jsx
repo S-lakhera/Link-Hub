@@ -80,30 +80,32 @@ const CreateLinkForm = ({ addLink }) => {
           "
         />
 
-        <button
-          type="submit"
-          disabled={isSubmitting}
-          className="
-            flex
-            items-center
-            gap-2
-            rounded-full
-            bg-slate-900
-            hover:scale-105
-            transition
-            text-white
-            px-6
-            py-3
-            disabled:opacity-50
-            disabled:cursor-not-allowed
-          "
-        >
-          <Plus size={18} />
+        <div className="flex justify-end pt-2">
+          <button
+            type="submit"
+            disabled={isSubmitting}
+            className="
+      flex
+      items-center
+      gap-2
+      rounded-full
+      bg-slate-900
+      hover:scale-105
+      transition
+      text-white
+      px-6
+      py-3
+      disabled:opacity-50
+      disabled:cursor-not-allowed
+    "
+          >
+            <Plus size={18} />
 
-          {isSubmitting
-            ? "Adding..."
-            : "Add Link"}
-        </button>
+            {isSubmitting
+              ? "Adding..."
+              : "Add Link"}
+          </button>
+        </div>
       </form>
     </div>
   );

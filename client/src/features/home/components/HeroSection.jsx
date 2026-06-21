@@ -1,7 +1,9 @@
 import { ArrowRight } from "lucide-react";
 import { Link } from "react-router";
+import useAuth from "../../../hooks/useAuth";
 
 const HeroSection = () => {
+  const { user } = useAuth()
   return (
     <section className="relative overflow-hidden">
       {/* Floating Elements */}
@@ -38,19 +40,37 @@ const HeroSection = () => {
                 <ArrowRight size={18} />
               </Link>
 
-              <button className="rounded-xl border px-8 py-4 font-semibold">
+              {/* <Link
+              to={`/${user?.username}`}
+               className="rounded-xl border px-8 py-4 font-semibold">
                 View Demo
-              </button>
+              </Link> */}
             </div>
           </div>
 
           {/* Mockup */}
           <div className="flex justify-center">
             <div className="w-80 rounded-3xl border shadow-2xl p-6 bg-white animate-bounce">
-              <div className="h-20 w-20 rounded-full bg-slate-200 mx-auto"></div>
+              <img
+                src={
+                  user?.avatar ||
+                  "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS76NDA3qBMLXNUdoHBC6XyfVshfJ-CvuQMxP-1p-AQnAH3j-Nj-VZc6gY&s=10"
+                }
+                alt="profile"
+                className="
+    h-20
+    w-20
+    rounded-full
+    object-cover
+    mx-auto
+    border-4
+    border-white
+    shadow-lg
+  "
+              />
 
               <h3 className="mt-4 text-center font-bold text-xl">
-                @shashank
+                @{user?.username || "john_the_developer"}
               </h3>
 
               <div className="mt-6 space-y-3">

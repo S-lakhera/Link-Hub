@@ -5,7 +5,7 @@ import { generateToken } from '../utils/authToken.js';
 export const registerUser = async (req, res) => {
     try {
 
-        let { username, email} = req.body;
+        let { username, email } = req.body;
 
         let existingUser = await UserDAO.getUserByEmail(email)
         if (existingUser) {
@@ -18,7 +18,7 @@ export const registerUser = async (req, res) => {
         }
 
         const newUser = await UserDAO.createUser(req.body);
-        
+
 
         let authToken = generateToken(newUser)
         if (!authToken) {
@@ -33,8 +33,6 @@ export const registerUser = async (req, res) => {
             user: newUser
         });
     } catch (error) {
-        console.log(error);
-
         res.status(400).json({ success: false, error: error.message });
     }
 };
@@ -58,7 +56,6 @@ export const loginUser = async (req, res) => {
             user
         });
     } catch (error) {
-        console.log(error);
 
         res.status(500).json({ success: false, error: error.message });
     }
@@ -84,9 +81,6 @@ export const getMe = async (req, res) => {
     try {
         let userId = req.user._id;
 
-        console.log(userId);
-
-
         const user = await UserDAO.getUserById(userId)
 
         res.status(200).json({
@@ -95,7 +89,6 @@ export const getMe = async (req, res) => {
             user
         });
     } catch (error) {
-        console.log(error);
         res.status(500).json({
             success: false,
             message: error.message,
@@ -136,11 +129,30 @@ export const getPublicProfile = async (req, res) => {
             links,
         });
     } catch (error) {
-        console.log(error);
-
         return res.status(500).json({
             success: false,
             message: error.message,
         });
     }
 };
+
+export const updateProfile =
+    async (req, res) => {
+        try {
+            const updatedUser =
+                await UserDAO.updateUserProfile(
+                    req.user._id,
+                    req.body
+                );
+
+            res.status(200).json({
+                success: true,
+                user: updatedUser,
+            });
+        } catch (error) {
+            res.status(500).json({
+                success: false,
+                message: error.message,
+            });
+        }
+    };

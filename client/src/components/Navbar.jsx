@@ -128,10 +128,9 @@ const Navbar = () => {
                     text-sm
                     font-medium
                     transition-all
-                    ${
-                      isActive
-                        ? "bg-white shadow-sm text-slate-900"
-                        : "text-slate-500 hover:text-slate-900"
+                    ${isActive
+                      ? "bg-white shadow-sm text-slate-900"
+                      : "text-slate-500 hover:text-slate-900"
                     }
                   `
                   }
@@ -139,37 +138,12 @@ const Navbar = () => {
                   <LayoutDashboard size={16} />
                   Dashboard
                 </NavLink>
-
-                <NavLink
-                  to="/analytics"
-                  className={({ isActive }) =>
-                    `
-                    flex
-                    items-center
-                    gap-2
-                    rounded-full
-                    px-4
-                    py-2
-                    text-sm
-                    font-medium
-                    transition-all
-                    ${
-                      isActive
-                        ? "bg-white shadow-sm text-slate-900"
-                        : "text-slate-500 hover:text-slate-900"
-                    }
-                  `
-                  }
-                >
-                  <BarChart3 size={16} />
-                  Analytics
-                </NavLink>
               </div>
 
               {/* Profile Button */}
               <button
                 onClick={() =>
-                  navigate(`/${user.username}`)
+                  navigate(`/profile`)
                 }
                 className="
                   flex
@@ -184,22 +158,20 @@ const Navbar = () => {
                   transition-colors
                 "
               >
-                <div
+                <img
+                  src={
+                    user?.avatar ||
+                    "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=500"
+                  }
+                  alt={user?.name}
                   className="
                     h-9
                     w-9
                     rounded-full
-                    bg-slate-900
-                    text-white
-                    flex
-                    items-center
-                    justify-center
-                    font-bold
-                    font-sora
-                  "
-                >
-                  {user?.name?.charAt(0)?.toUpperCase()}
-                </div>
+                    object-cover
+                    border-2
+                    border-white"
+                />
 
                 <span
                   className="

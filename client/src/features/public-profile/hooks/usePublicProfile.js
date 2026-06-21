@@ -18,9 +18,6 @@ const usePublicProfile = (username) => {
                         username
                     );
 
-                    console.log(response);
-                    
-
                 setProfile(response.user);
                 setLinks(response.links);
             } catch (err) {

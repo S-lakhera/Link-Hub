@@ -12,16 +12,16 @@ import PublicRoute from "./routes/PublicRoute";
 import LandingPage from "./features/home/pages/LandingPage";
 import PublicProfile from "./features/public-profile/pages/PublicProfile";
 import Dashboard from "./features/dashboard/pages/Dashboard";
+import Profile from "./features/profile/pages/Profile";
+import AuthRoute from "./routes/AuthRoute";
 
-
-const Analytics = () => <h1>Analytics Page</h1>;
 
 const router = createBrowserRouter([
   {
     element: (
-      <PublicRoute>
+      <AuthRoute>
         <AuthLayout />
-      </PublicRoute>
+      </AuthRoute>
     ),
     children: [
 
@@ -64,8 +64,8 @@ const router = createBrowserRouter([
         element: <Dashboard />,
       },
       {
-        path: "/analytics",
-        element: <Analytics />,
+        path: "/profile",
+        element: <Profile />,
       },
     ],
   },

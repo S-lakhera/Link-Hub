@@ -3,8 +3,6 @@ import jwt from "jsonwebtoken";
 dotenv.config()
 
 let secret = process.env.JWT_SECRET;
-console.log(secret);
-
 
 export const generateToken = (user) => {
     const payload = {
