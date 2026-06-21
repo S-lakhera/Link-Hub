@@ -2,7 +2,7 @@
 
 A full-stack **link-in-bio** platform where users can create a personalized public profile page with all their important links — similar to Linktree. Users can manage, feature, and track clicks on their links, and share a public profile URL.
 
-**Live Demo:** [link-hub-client.vercel.app](https://link-hub-client.vercel.app) &nbsp;|&nbsp; **Backend:** [link-hub-zhwv.onrender.com](https://link-hub-zhwv.onrender.com)
+**Live Demo:** [Link-Hub](https://link-hub-tau-ten.vercel.app)
 
 ---
 
