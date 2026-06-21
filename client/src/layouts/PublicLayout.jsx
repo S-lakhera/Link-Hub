@@ -1,14 +1,16 @@
 import { Outlet } from "react-router";
 import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
 
 const DashboardLayout = () => {
   return (
     <div className="min-h-screen bg-slate-50">
       <Navbar />
 
-      <main className="max-w-7xl mx-auto p-6">
+      <main className="w-full mx-auto px-4">
         <Outlet />
       </main>
+
     </div>
   );
 };

@@ -9,8 +9,11 @@ class UserDAO {
         return({
             name: savedUser.name,
             username: savedUser.username,
-            id: savedUser._id,
+            _id: savedUser._id,
             email: savedUser.email,
+            avatar:savedUser.avatar,
+            bio: savedUser.bio,
+            socials: savedUser.socials,
         })
     }
 
@@ -21,7 +24,7 @@ class UserDAO {
 
     // Find a user by email
     async getUserByUsername(username) {
-        return await User.findOne({ username }).select('-password');
+        return await User.findOne({ username, isDeleted:false }).select('-password');
     }
 
     // Find a user by ID

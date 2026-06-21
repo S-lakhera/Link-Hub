@@ -9,7 +9,17 @@ let userSchema = new mongoose.Schema({
     username: {
         type: String,
         required: true,
+        unique: true,
         trim: true,
+        lowercase: true,
+    },
+    avatar: {
+        type: String,
+        default: "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?fm=jpg&q=60&w=3000&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8YXZhdGFyfGVufDB8fDB8fHww"
+    },
+    bio: {
+        type: String,
+        trim: true
     },
     email: {
         type: String,
@@ -24,6 +34,17 @@ let userSchema = new mongoose.Schema({
         trim: true,
         minlength: 6
     },
+    socials: {
+        github: String,
+        linkedin: String,
+        youtube: String,
+        instagram: String,
+        twitter: String
+    },
+    isDeleted: {
+        type: Boolean,
+        default: false
+    }
 },
     {
         timestamps: true

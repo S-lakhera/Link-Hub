@@ -1,10 +1,11 @@
 import UserDAO from '../daos/user.daos.js';
+import LinkDAO from '../daos/link.daos.js'
 import { generateToken } from '../utils/authToken.js';
 
 export const registerUser = async (req, res) => {
     try {
 
-        let { name, username, email, password } = req.body;
+        let { username, email } = req.body;
 
         let existingUser = await UserDAO.getUserByEmail(email)
         if (existingUser) {
@@ -17,6 +18,7 @@ export const registerUser = async (req, res) => {
         }
 
         const newUser = await UserDAO.createUser(req.body);
+
 
         let authToken = generateToken(newUser)
         if (!authToken) {
@@ -31,9 +33,7 @@ export const registerUser = async (req, res) => {
             user: newUser
         });
     } catch (error) {
-        console.log(error);
-
-        res.status(400).json({ success:false, error: error.message });
+        res.status(400).json({ success: false, error: error.message });
     }
 };
 
@@ -56,9 +56,8 @@ export const loginUser = async (req, res) => {
             user
         });
     } catch (error) {
-        console.log(error);
 
-        res.status(500).json({ success:false, error: error.message });
+        res.status(500).json({ success: false, error: error.message });
     }
 };
 
@@ -72,8 +71,88 @@ export const logoutUser = (req, res) => {
         })
     } catch (error) {
         res.status(500).json({
-            success:false,
+            success: false,
             message: error.message,
         })
     }
 }
+
+export const getMe = async (req, res) => {
+    try {
+        let userId = req.user._id;
+
+        const user = await UserDAO.getUserById(userId)
+
+        res.status(200).json({
+            success: true,
+            message: "User found",
+            user
+        });
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: error.message,
+        })
+    }
+}
+
+export const getPublicProfile = async (req, res) => {
+    try {
+        const { username } = req.params;
+
+        const user = await UserDAO.getUserByUsername(
+            username.toLowerCase()
+        );
+
+        if (!user) {
+            return res.status(404).json({
+                success: false,
+                message: "User not found",
+            });
+        }
+
+        const links = await LinkDAO.findByUserId(
+            user._id
+        );
+
+        const publicUser = {
+            name: user.name,
+            username: user.username,
+            avatar: user.avatar,
+            bio: user.bio,
+            socials: user.socials,
+        };
+
+        return res.status(200).json({
+            success: true,
+            user: publicUser,
+            links,
+        });
+    } catch (error) {
+        return res.status(500).json({
+            success: false,
+            message: error.message,
+        });
+    }
+};
+
+export const updateProfile =
+    async (req, res) => {
+        try {
+            const updatedUser =
+                await UserDAO.updateUserProfile(
+                    req.user._id,
+                    req.body
+                );
+
+            res.status(200).json({
+                success: true,
+                user: updatedUser,
+            });
+        } catch (error) {
+            res.status(500).json({
+                success: false,
+                message: error.message,
+            });
+        }
+    };

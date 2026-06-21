@@ -4,24 +4,24 @@ import AuthLayout from "./layouts/AuthLayout";
 import DashBoardLayout from "./layouts/DashBoardLayout";
 import PublicLayout from './layouts/PublicLayout'
 
-import Login from "./features/auth/ui/Login";
-import Register from "./features/auth/ui/Register";
+import Login from "./features/auth/pages/Login";
+import Register from "./features/auth/pages/Register";
 
 import ProtectedRoute from "./routes/ProtectedRoute";
 import PublicRoute from "./routes/PublicRoute";
+import LandingPage from "./features/home/pages/LandingPage";
+import PublicProfile from "./features/public-profile/pages/PublicProfile";
+import Dashboard from "./features/dashboard/pages/Dashboard";
+import Profile from "./features/profile/pages/Profile";
+import AuthRoute from "./routes/AuthRoute";
 
-const LandingPage = () => <h1>Landing Page</h1>;
-
-const Analytics = () => <h1>Analytics Page</h1>;
-
-const PublicProfile = () => <h1>Public Profile</h1>;
 
 const router = createBrowserRouter([
   {
     element: (
-      <PublicRoute>
+      <AuthRoute>
         <AuthLayout />
-      </PublicRoute>
+      </AuthRoute>
     ),
     children: [
 
@@ -61,11 +61,11 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/dashboard",
-        element: <h1>Dashboard</h1>,
+        element: <Dashboard />,
       },
       {
-        path: "/analytics",
-        element: <Analytics />,
+        path: "/profile",
+        element: <Profile />,
       },
     ],
   },
