@@ -86,7 +86,49 @@ Linkhub/
 ---
 
 
-## ⚙️ Local Setup
+## 🐳 Docker Setup (Recommended)
+
+The easiest way to run the application locally is using Docker. 
+
+### Prerequisites
+
+- [Docker](https://www.docker.com/) and Docker Compose installed and running.
+
+### 1. Clone the Repository
+
+```bash
+git clone https://github.com/your-username/linkhub.git
+cd linkhub
+```
+
+### 2. Configure Environment Variables
+
+Create the necessary `.env` files for both the server and client. 
+- In `server/.env`, you will need variables like `PORT`, `MONGO_URI`, `JWT_SECRET`, etc.
+- In `client/.env`, you will need `VITE_API_URL=http://localhost:3000/api`.
+
+*(See the Manual Setup section below for detailed `.env` examples).*
+
+### 3. Start the Containers
+
+From the root of the project, run:
+
+```bash
+docker compose up --build
+```
+
+This will start both the client and the server with hot-reloading enabled.
+- **Client** runs at: `http://localhost:5173`
+- **Server** runs at: `http://localhost:3000`
+
+**Useful Docker Commands:**
+- Run in detached mode (background): `docker compose up --build -d`
+- View live logs: `docker compose logs -f`
+- Stop and clear volumes (useful if you add new npm packages): `docker compose down -v`
+
+---
+
+## ⚙️ Manual Local Setup
 
 ### Prerequisites
 
